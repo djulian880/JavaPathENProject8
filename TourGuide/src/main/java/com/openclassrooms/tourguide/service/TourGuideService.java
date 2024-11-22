@@ -10,6 +10,9 @@ import com.openclassrooms.tourguide.user.UserReward;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -35,6 +38,9 @@ public class TourGuideService {
 	public final Tracker tracker;
 	boolean testMode = true;
 
+	private final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()*10);
+
+
 	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
 		this.gpsUtil = gpsUtil;
 		this.rewardsService = rewardsService;
@@ -56,8 +62,10 @@ public class TourGuideService {
 	}
 
 	public VisitedLocation getUserLocation(User user) {
+		List<User> userlist = List.of(user);
+
 		VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ? user.getLastVisitedLocation()
-				: trackUserLocation(user);
+				: trackUserLocation(userlist).get(0);
 		return visitedLocation;
 	}
 
@@ -84,11 +92,25 @@ public class TourGuideService {
 		return providers;
 	}
 
-	public VisitedLocation trackUserLocation(User user) {
-		VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
-		user.addToVisitedLocations(visitedLocation);
-		rewardsService.calculateRewards(user);
-		return visitedLocation;
+	public Map<UUID,VisitedLocation> trackUserLocation(List<User> users) {
+		Map<UUID,VisitedLocation> visitedLocations = new HashMap<>();
+		List<CompletableFuture<Void>> futures = users.stream()
+				.map(user -> CompletableFuture.runAsync(() -> {
+					VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
+					user.addToVisitedLocations(visitedLocation);
+					visitedLocations.put(user.getUserId(),visitedLocation);
+				}, executorService))
+				.collect(Collectors.toList());
+		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+		List<CompletableFuture<Void>> futures2 = users.stream()
+				.map(user -> CompletableFuture.runAsync(() -> {
+					rewardsService.calculateRewards(List.of(user));
+				}, executorService))
+				.collect(Collectors.toList());
+		CompletableFuture.allOf(futures2.toArray(new CompletableFuture[0])).join();
+
+		return visitedLocations;
 	}
 
 	public FiveNearestAttractionsDTO getNearByAttractions(VisitedLocation visitedLocation,User user) {
