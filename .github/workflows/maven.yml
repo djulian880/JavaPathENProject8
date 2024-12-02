@@ -37,8 +37,8 @@ jobs:
 
     - name: Build with Maven
       run: |
-          cd TourGuide
-          mvn clean install
+        cd TourGuide
+        mvn clean install
 
   test-job:
     name: Test
