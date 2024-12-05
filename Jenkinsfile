@@ -1,12 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
-            steps {
-                // Cloner le dépôt
-                checkout scm
-            }
-        }
         stage('Build') {
             steps {
                 // Préparation et installation des fichiers JAR locaux
