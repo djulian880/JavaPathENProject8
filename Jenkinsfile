@@ -15,17 +15,13 @@ pipeline {
         stage('Build') {
             steps {
                 // Préparation et installation des fichiers JAR locaux
-                sh '''
-                    mvn clean install
-                '''
+                sh 'mvn clean install'
             }
         }
         stage('Test') {
             steps {
                 // Préparation et exécution des tests
-                sh '''
-                    mvn test
-                '''
+                sh 'mvn test'
             }
         }
         stage('Deploy') {
