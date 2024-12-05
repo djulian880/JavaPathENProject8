@@ -1,10 +1,5 @@
 pipeline {
     agent any
-
-    environment {
-        // Définir une variable d'environnement pour le repository local Maven
-        MAVEN_REPO = "${HOME}/.m2/repository"
-    }
     stages {
         stage('Checkout') {
             steps {
@@ -15,7 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Préparation et installation des fichiers JAR locaux
-                mvn clean install
+                sh 'mvn clean install'
             }
         }
         stage('Test') {
