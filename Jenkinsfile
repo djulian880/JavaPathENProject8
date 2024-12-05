@@ -15,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Préparation et installation des fichiers JAR locaux
-                sh 'mvn clean install'
+                mvn clean install
             }
         }
         stage('Test') {
