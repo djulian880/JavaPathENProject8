@@ -6,6 +6,7 @@ pipeline {
                 // Préparation et installation des fichiers JAR locaux
                 // sh 'mvn -B -DskipTests clean package'
                 echo 'toto maven'
+                sh 'ls'
             }
         }
         stage('Test') {
