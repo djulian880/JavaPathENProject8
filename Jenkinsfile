@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage('Debug') {
+            steps {
+               sh 'echo $0'
+            }
+        }
         stage('Build') {
             steps {
                 // Préparation et installation des fichiers JAR locaux
