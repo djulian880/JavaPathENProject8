@@ -4,37 +4,16 @@ pipeline {
         maven 'Maven-3.9.6'
     }
     stages {
-        stage('Check Commands') {
-            steps {
-                sh '''
-                echo "Testing commands..."
-                which cp
-                which mv
-                which sleep
-                echo "PATH: $PATH"
-                '''
-            }
-        }
-        stage('Test Maven') {
-            steps {
-                sh '''
-                echo "Testing Maven..."
-                which mvn
-                mvn -v
-                '''
-            }
-        }
         stage('Build') {
             steps {
-                // Préparation et installation des fichiers JAR locaux
-                // sh 'mvn -B -DskipTests clean package'
-                echo 'toto maven'
-                sh 'ls'
+                sh '''
+                cd TourGuide
+                mvn mvn -B -DskipTests clean package
+                '''
             }
         }
         stage('Test') {
             steps {
-                // Préparation et exécution des tests
                 sh '''
                 cd TourGuide
                 mvn test
@@ -46,7 +25,10 @@ pipeline {
                 branch 'main' // Exécute cette étape uniquement sur la branche main
             }
             steps {
-                echo 'Deployment step'
+                sh '''
+                cd TourGuide
+                mvn clean package
+                '''
             }
         }
     }
