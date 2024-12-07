@@ -35,7 +35,10 @@ pipeline {
         stage('Test') {
             steps {
                 // Préparation et exécution des tests
-                sh 'mvn test'
+                sh '''
+                cd TourGuide
+                mvn test
+                '''
             }
         }
         stage('Deploy') {
