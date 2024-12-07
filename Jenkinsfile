@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven-3.9.6'
+    }
     stages {
         stage('Check Commands') {
             steps {
@@ -9,6 +12,15 @@ pipeline {
                 which mv
                 which sleep
                 echo "PATH: $PATH"
+                '''
+            }
+        }
+        stage('Test Maven') {
+            steps {
+                sh '''
+                echo "Testing Maven..."
+                which mvn
+                mvn -v
                 '''
             }
         }
