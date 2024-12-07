@@ -21,9 +21,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-            when {
-                branch 'master'
-            }
             steps {
                 sh '''
                 cd TourGuide
@@ -34,11 +31,9 @@ pipeline {
     }
     post {
         always {
-            // Sauvegarde des artefacts (facultatif)
             archiveArtifacts artifacts: 'TourGuide/target/*.jar', fingerprint: true
         }
         failure {
-            // Action en cas d'échec
             echo 'Build failed!'
         }
     }
