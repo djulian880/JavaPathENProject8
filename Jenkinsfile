@@ -1,9 +1,15 @@
 pipeline {
     agent any
     stages {
-        stage('Debug') {
+        stage('Check Commands') {
             steps {
-               sh 'echo $0'
+                sh '''
+                echo "Testing commands..."
+                which cp
+                which mv
+                which sleep
+                echo "PATH: $PATH"
+                '''
             }
         }
         stage('Build') {
