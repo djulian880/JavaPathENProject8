@@ -8,7 +8,7 @@ pipeline {
             steps {
                 sh '''
                 cd TourGuide
-                mvn mvn -B -DskipTests clean package
+                mvn -B -DskipTests clean package
                 '''
             }
         }
