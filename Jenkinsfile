@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                branch 'main' // Exécute cette étape uniquement sur la branche main
+                branch 'master'
             }
             steps {
                 sh '''
