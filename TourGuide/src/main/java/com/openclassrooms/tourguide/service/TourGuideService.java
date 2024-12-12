@@ -103,13 +103,7 @@ public class TourGuideService {
 				.collect(Collectors.toList());
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 
-		List<CompletableFuture<Void>> futures2 = users.stream()
-				.map(user -> CompletableFuture.runAsync(() -> {
-					rewardsService.calculateRewards(List.of(user));
-				}, executorService))
-				.collect(Collectors.toList());
-		CompletableFuture.allOf(futures2.toArray(new CompletableFuture[0])).join();
-
+		rewardsService.calculateRewards(users);
 		return visitedLocations;
 	}
 
