@@ -8,7 +8,7 @@ pipeline {
             steps {
                 sh '''
                 cd TourGuide
-                mvn -B -DskipTests clean package
+                mvn -B -DskipTests clean install
                 '''
             }
         }
@@ -31,7 +31,12 @@ pipeline {
         stage('Run Jar') {
             steps {
                 echo "Running the JAR file: "
-                sh "screen -dmS TourGuide java -jar TourGuide/target/tourguide-0.0.1-SNAPSHOT.jar"
+                sh '''
+                cd TourGuide
+                cd target
+                ls
+                screen -S TourGuide java -jar tourguide-0.0.1-SNAPSHOT.jar
+                '''
             }
         }
     }
