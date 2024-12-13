@@ -34,7 +34,7 @@ pipeline {
                 sh '''
                 cd TourGuide
                 cd target
-                timeout 600 java -jar tourguide-0.0.1-SNAPSHOT.jar
+                tmux new-session -d -s tourguide_session "java -jar tourguide-0.0.1-SNAPSHOT.jar"
                 '''
             }
         }
