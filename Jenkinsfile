@@ -34,8 +34,7 @@ pipeline {
                 sh '''
                 cd TourGuide
                 cd target
-                ls
-                screen -S TourGuide java -jar tourguide-0.0.1-SNAPSHOT.jar
+                screen -dmS TourGuide java -jar tourguide-0.0.1-SNAPSHOT.jar
                 '''
             }
         }
