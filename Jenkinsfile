@@ -34,7 +34,7 @@ pipeline {
                 sh '''
                 cd TourGuide
                 cd target
-                nohup /Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home/bin/java -jar tourguide-0.0.1-SNAPSHOT.jar > application.log 2>&1 &
+                java -jar tourguide-0.0.1-SNAPSHOT.jar
                 '''
             }
         }
