@@ -34,8 +34,8 @@ pipeline {
                 sh '''
                 cd TourGuide
                 cd target
-                nohup java -jar tourguide-0.0.1-SNAPSHOT.jar &
                 '''
+                timeout 600 java -jar tourguide-0.0.1-SNAPSHOT.jar
             }
         }
     }
