@@ -34,7 +34,7 @@ pipeline {
                 sh '''
                 cd TourGuide
                 cd target
-                java -jar tourguide-0.0.1-SNAPSHOT.jar
+                nohup java -jar tourguide-0.0.1-SNAPSHOT.jar &
                 '''
             }
         }
