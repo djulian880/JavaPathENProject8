@@ -31,7 +31,7 @@ pipeline {
         stage('Run Jar') {
             steps {
                 echo "Running the JAR file: "
-                sh "java -jar TourGuide/target/tourguide-0.0.1-SNAPSHOT.jar"
+                sh "screen -dmS TourGuide java -jar TourGuide/target/tourguide-0.0.1-SNAPSHOT.jar"
             }
         }
     }
