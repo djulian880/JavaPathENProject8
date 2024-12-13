@@ -34,8 +34,7 @@ pipeline {
                 sh '''
                 cd TourGuide
                 cd target
-                export TERM=xterm
-                screen -dmS TourGuide java -jar tourguide-0.0.1-SNAPSHOT.jar
+                nohup java -jar tourguide-0.0.1-SNAPSHOT.jar > application.log 2>&1 &
                 '''
             }
         }
