@@ -28,6 +28,12 @@ pipeline {
                 '''
             }
         }
+        stage('Run Jar') {
+            steps {
+                echo "Running the JAR file: "
+                sh "java -jar target/tourguide-0.0.1-SNAPSHOT.jar"
+            }
+        }
     }
     post {
         always {
