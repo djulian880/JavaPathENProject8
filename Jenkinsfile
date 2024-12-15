@@ -34,7 +34,7 @@ pipeline {
                 sh '''
                 cd TourGuide
                 cd target
-                /opt/homebrew/bin/tmux/tmux new-session -d -s tourguide_session "java -jar tourguide-0.0.1-SNAPSHOT.jar"
+                /opt/homebrew/bin/tmux new-session -d -s tourguide_session "java -jar tourguide-0.0.1-SNAPSHOT.jar"
                 '''
             }
         }
