@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        TERM = "xterm" // Définit le terminal pour éviter les erreurs
+    }
     tools {
         maven 'Maven-3.9.6'
     }
