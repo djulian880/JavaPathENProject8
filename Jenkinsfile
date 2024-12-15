@@ -37,9 +37,7 @@ pipeline {
                 sh '''
                 cd TourGuide
                 cd target
-                export TERM=xterm
-                /opt/homebrew/bin/tmux new-session -d -s test
-                /opt/homebrew/bin/tmux new-session -d -s tourguide_session "java -jar tourguide-0.0.1-SNAPSHOT.jar"
+                nohup java -jar tourguide-0.0.1-SNAPSHOT.jar > application.log 2>&1 &
                 '''
             }
         }
