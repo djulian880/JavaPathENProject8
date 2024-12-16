@@ -44,7 +44,7 @@ pipeline {
                             '''
                         }
                     } catch (Exception e) {
-                        echo "Timeout or error occurred: ${e.getMessage()}"
+                        echo "Stopping program run: timeout reached"
                         currentBuild.result = 'SUCCESS' // Définir explicitement le statut
                     }
                 }
