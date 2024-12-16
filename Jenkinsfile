@@ -33,21 +33,21 @@ pipeline {
         }
         stage('Run Jar') {
             steps {
-
-                try {
-                    timeout(time: 5, unit: 'MINUTES') {
-                        echo "Running the JAR file: "
-                        sh '''
-                        cd TourGuide
-                        cd target
-                        java -jar tourguide-0.0.1-SNAPSHOT.jar
-                        '''
+                script {
+                    try {
+                        timeout(time: 5, unit: 'MINUTES') {
+                            echo "Running the JAR file: "
+                            sh '''
+                            cd TourGuide
+                            cd target
+                            java -jar tourguide-0.0.1-SNAPSHOT.jar
+                            '''
+                        }
+                    } catch (Exception e) {
+                        echo "Timeout or error occurred: ${e.getMessage()}"
+                        currentBuild.result = 'SUCCESS' // Définir explicitement le statut
                     }
-                } catch (Exception e) {
-                    echo "Timeout or error occurred: ${e.getMessage()}"
-                    currentBuild.result = 'SUCCESS' // Définir explicitement le statut
                 }
-
             }
         }
     }
